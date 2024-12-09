@@ -1,3 +1,4 @@
+import os
 import matplotlib.pyplot as plt
 import streamlit as st
 import matplotlib
@@ -36,7 +37,11 @@ st.title("Sales")
 
 
 #Data Frames selection
-data = pd.read_csv(rf'C:\Users\tanju\Desktop\Project\GAME_GRID_project\data\games_prepped.csv', low_memory=False)
+if os.name == 'nt': # if its windows
+    data = pd.read_csv(rf'C:\Users\tanju\Desktop\Project\GAME_GRID_project\data\games_prepped.csv', low_memory=False)
+else:
+    data = pd.read_csv("../data/games_prepped.csv", low_memory=False)
+
 df = data[data['year'] != 2024]
 
 df_agg = df.groupby(['year']).agg({'estimated_revenue': 'sum'}).reset_index()
