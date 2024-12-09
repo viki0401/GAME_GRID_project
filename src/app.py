@@ -5,7 +5,7 @@ pg = st.navigation([
     st.Page("pages/analysis.py", title="Analysis", icon="🥳"),
     st.Page("pages/intro.py", title="Intro", icon="🥲"),
     st.Page("pages/references.py", title=" References", icon="🥳"),
-    st.Page("pages/third.py", title ="Third", icon ="🥳")
+    st.Page("pages/impact.py", title ="Umpact", icon ="🥳")
 ])
 
 # Run the navigation system
