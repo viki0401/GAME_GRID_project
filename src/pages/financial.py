@@ -27,13 +27,4 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Main content
-st.title("☾⋆⁺🛠️ ✩°｡ Analysis of Video Game Sales ☾⋆⁺₊🛠️✩°｡")
-
-# Matplotlib plot (this example should no longer trigger the font warning)
-
-
-
-
-
-
-
+st.title("Sales")
