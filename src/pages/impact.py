@@ -29,3 +29,69 @@ st.markdown("This is the description of the title")
 
 
 url = "https://storage.googleapis.com/kagglesdsdata/datasets/966275/9728664/Twitch_game_data.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20241206%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241206T180624Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=980ed233b72a7add4ed92aea452b00e270b12451ace11229bf4cf831f4ff46b1d115006c760eeb79656b050415987cc20cd7a14843847022e8ec83cd655098dd7af79deb5bdbe738531ee642b5a6c727bb08aa36e8e84b9aa1463381c61bf5777b64d77a57f9eac672a2426050bf9241e7d82209dda78e10da5eaaf12eed4c72cd4e9d7d62c484cd4692b3c4adf2465ed4b1f47a072fd4e97c57b1971708e2796f864cdabd93db884db984ba9e038732d299d593e49ba8789a3a91e140a5bfa948a29710ab183f48f65d7efe6f260d26ed707b9bb40f3a39c8fe253744f1c1688cf6d2444934651fe300c54989e91d566b29c08f997b7493fb9e65ac49a157df"
+with open("./data/life-expectancy-table.json") as f:
+    raw_data = json.load(f)
+countries = [
+    "Finland",
+    "France",
+    "Germany",
+    "Iceland",
+    "Norway",
+    "Poland",
+    "Russia",
+    "United Kingdom",
+]
+
+datasetWithFilters = [
+    {
+        "id": f"dataset_{country}",
+        "fromDatasetId": "dataset_raw",
+        "transform": {
+            "type": "filter",
+            "config": {
+                "and": [
+                    {"dimension": "Year", "gte": 1950},
+                    {"dimension": "Country", "=": country},
+                ]
+            },
+        },
+    }
+    for country in countries
+]
+
+seriesList = [
+    {
+        "type": "line",
+        "datasetId": f"dataset_{country}",
+        "showSymbol": False,
+        "name": country,
+        "endLabel": {
+            "show": True,
+            "formatter": JsCode(
+                "function (params) { return params.value[3] + ': ' + params.value[0];}"
+            ).js_code,
+        },
+        "labelLayout": {"moveOverlap": "shiftY"},
+        "emphasis": {"focus": "series"},
+        "encode": {
+            "x": "Year",
+            "y": "Income",
+            "label": ["Country", "Income"],
+            "itemName": "Year",
+            "tooltip": ["Income"],
+        },
+    }
+    for country in countries
+]
+
+option = {
+    "animationDuration": 10000,
+    "dataset": [{"id": "dataset_raw", "source": raw_data}] + datasetWithFilters,
+    "title": {"text": "Income in Europe since 1950"},
+    "tooltip": {"order": "valueDesc", "trigger": "axis"},
+    "xAxis": {"type": "category", "nameLocation": "middle"},
+    "yAxis": {"name": "Income"},
+    "grid": {"right": 140},
+    "series": seriesList,
+}
+st_echarts(options=option, height="600px")

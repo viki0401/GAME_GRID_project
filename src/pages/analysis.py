@@ -17,7 +17,7 @@ st.markdown("""
     html, body, [class*="css"]  {
         font-family: 'Roboto Slab', serif;
         color: white;
-        background-color: #1E1E2F;
+        background-color: #F5F5DC;
     }
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Roboto Slab', serif;
