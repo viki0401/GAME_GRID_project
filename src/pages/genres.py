@@ -33,7 +33,7 @@ st.markdown("""
 # Main content
 st.title("Genres Playtime Sales")
 
-tab1, tab2 = st.tabs(["Playtime across Genres", "Playtime of age restricted games across Genres"])
+tab1, tab2 ,tab3, tab4 = st.tabs(["Playtime across Genres", "Playtime of age restricted games across Genres", "Top 10 Games with most playtime ever", "Top 10 priciest Games and their Primary Genre"])
 
 
 #read the datafram
@@ -65,12 +65,12 @@ fig = px.pie(
     df_final, 
     names='Genre', 
     values='Playtime', 
-    title="Average Playtime Distribution Across Genres (with 'Others')",
+    title="Average Playtime Distribution Across Genres (with Others as combination of smaller genres)",
     color_discrete_sequence=px.colors.qualitative.Set3
 )
 
 fig.update_traces(textposition='inside', textinfo='percent+label')
-fig.update_layout(height=700, width=700)
+fig.update_layout(height=500, width=700)
 
 #st.plotly_chart(fig)
 
@@ -144,17 +144,82 @@ fig2 = px.bar(
 fig2.update_xaxes(categoryorder='total descending')  # Keep sorting of total bar heights
 fig2.update_layout(
     xaxis_title='Genre', 
-    yaxis_title='Average Playtime (Forever)',
+    yaxis_title='Average Playtime (Hours)',
     legend_title='Age Restriction',
     xaxis_tickangle=45,
-    height=600,
-    width=1200
+    height=500,
+    width=700
 )
 
-#st.plotly_chart(fig2)
+#third graph
+top_10_playtime = df[['name', 'average_playtime_forever_in_hours', 'price']].sort_values(by='average_playtime_forever_in_hours', ascending=False).head(10)
+
+
+fig3 = px.bar(top_10_playtime, 
+             y='name', 
+             x='average_playtime_forever_in_hours', 
+             title='Top 10 Games with the Most Playtime Ever',
+             labels={'name': 'Game Name', 'average_playtime_forever_in_hours': 'Average Playtime (Hours)'},
+             color_continuous_scale='Viridis')
+
+
+fig3.update_xaxes(title='Average Playtime (Hours)', tickangle=45)
+fig3.update_yaxes(title='Game Name')
+fig3.update_layout(
+    xaxis_tickangle=45,
+    height=500,
+    width=700
+)
+
+
+#fourth figure
+price = df[df['price'] > 190].nlargest(10, 'price')
+price_grouped = price.groupby(['name','price'], as_index=False)['Genre_1'].agg(list)
+price_grouped['Genre_1'] = price_grouped['Genre_1'].apply(lambda x: ', '.join(x))
+
+fig4 = px.bar(
+    price_grouped, 
+    x='name', 
+    y='price', 
+    color='Genre_1', 
+    barmode='stack',
+    title='Top 10 Priciest Games with  and their primary Genre'
+)
+fig4.update_xaxes(categoryorder='total descending')
+fig4.update_layout(xaxis_title='Name', yaxis_title='Price',
+    height=500,
+    width=700)
+
+#fifth figure
+price_grouped_2 = price.groupby(['name','price'], as_index=False)['Genre_2'].agg(list)
+price_grouped_2['Genre_2'] = price_grouped_2['Genre_2'].apply(
+    lambda x: ', '.join([str(i) for i in x if i is not None])
+)
+price_grouped_2['Genre_2'] = price_grouped_2['Genre_2'].str.replace(r'[\[\]]', '', regex=True)
+
+fig5 = px.bar(
+    price_grouped_2, 
+    x='name', 
+    y='price', 
+    color='Genre_2', 
+    barmode='stack',
+    title='op 10 Priciest Games with  and their secondary Genre'
+)
+fig5.update_xaxes(categoryorder='total descending')
+fig5.update_layout(xaxis_title='Genre', yaxis_title='Genre',
+    height=500,
+    width=700)
+
 
 with tab1:
     st.plotly_chart(fig)
 
 with tab2:
     st.plotly_chart(fig2)
+
+with tab3:
+    st.plotly_chart(fig3)
+
+with tab4:
+    st.plotly_chart(fig4)
+    st.plotly_chart(fig5)

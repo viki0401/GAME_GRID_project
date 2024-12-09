@@ -66,29 +66,63 @@ tab1, tab2, tab3, tab4 = st.tabs(["Yearly Games Released", "Yearly Revenue", "Re
 
 
 #First graphs
-fig1 = px.line(year_sum_df, x='Year', y='count', title='Number of games released over the years')
-fig1.update_yaxes(title='Number of games released')
+fig1 = px.line(year_sum_df, x='Year', y='count', title='Number of games released (1997-2023)')
+fig1.update_layout(
+    title={'x': 0.5, 'xanchor': 'center'},
+    showlegend=False
+)
+fig1.update_xaxes(
+    title='Year',
+    showgrid=True, gridcolor='lightgray', gridwidth=1)
+fig1.update_yaxes(
+    title='Number of games released (K for Thousands)',
+    showgrid=True, gridcolor='lightgray', gridwidth=1)
 
 
 fig2 = px.line(df_agg, x='year', y='estimated_revenue', title='Estimated revenue over all years')
-fig2.update_xaxes(title='Year')
-
+fig2.update_layout(
+    title={'x': 0.5, 'xanchor': 'center'},
+    showlegend=False
+)
+fig2.update_xaxes(
+    title='Year',
+    showgrid=True, gridcolor='lightgray', gridwidth=1
+)
+fig2.update_yaxes(
+    title='Estimated Revenue (B for Billions)',
+    showgrid=True, gridcolor='lightgray', gridwidth=1)
 
 
 fig3 = px.scatter(filtered_df, x='year', y='estimated_revenue',
-                 title='Estimated Revenue',
+                 title='Estimated Revenue (2009-2023) with trendline',
                  trendline="ols",
                  color_continuous_scale='Viridis')
 fig3.update_layout(
     xaxis_title='Year',
-    yaxis_title='Estimated Revenue',
+    yaxis_title='Estimated Revenue (B for Billions)',
     title={'x': 0.5, 'xanchor': 'center'},
     showlegend=False
 )
+fig3.update_xaxes(
+    showgrid=True, gridcolor='lightgray', gridwidth=1
+)
+fig3.update_yaxes(
+    showgrid=True, gridcolor='lightgray', gridwidth=1)
+
+
 
 
 fig4 = px.line(monthly_sum_df, x='Month', y='count', title='Number of games released each month over all years')
-fig4.update_yaxes(title='Number of games released')
+fig4.update_layout(
+    title={'x': 0.5, 'xanchor': 'center'},
+    showlegend=False
+)
+fig4.update_xaxes(
+    showgrid=True, gridcolor='lightgray', gridwidth=1
+)
+fig4.update_yaxes(
+    title='Number of games released (Thousands)',
+    showgrid=True, gridcolor='lightgray', gridwidth=1)
 
 with tab1:
     st.plotly_chart(fig1)
