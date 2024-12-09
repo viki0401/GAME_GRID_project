@@ -2,6 +2,10 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import matplotlib
 import numpy as np
+import pandas as pd
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 
 # Set the font to 'sans-serif' to avoid issues with unsupported fonts like 'Courier New'
 matplotlib.rcParams['font.family'] = 'sans-serif'
@@ -28,3 +32,76 @@ st.markdown("""
 
 # Main content
 st.title("Sales")
+
+
+
+#Data Frames selection
+data = pd.read_csv(rf'C:\Users\tanju\Desktop\Project\GAME_GRID_project\data\games_prepped.csv', low_memory=False)
+df = data[data['year'] != 2024]
+
+df_agg = df.groupby(['year']).agg({'estimated_revenue': 'sum'}).reset_index()
+filtered_df =df_agg[(df_agg['year'] >= 2009) & (df_agg['year'] <= 2023)]
+
+count_sorted_df=df["month_year"].value_counts().reset_index().sort_values(by='count',ascending=False)
+count_sorted_df[["Month","Year"]]=count_sorted_df["month_year"].str.split("-",expand=True)
+split_data_df=count_sorted_df[["Month","Year","count"]]
+split_data_df.set_index("Month")
+
+yearly_sum=split_data_df.groupby(["Year"])["count"].sum()
+monthly_sum=split_data_df.groupby(["Month"])["count"].sum()
+
+monthly_sum_df=monthly_sum.reset_index().rename(columns={"index": "value", 0: "count"})
+yearly_sum_df=yearly_sum.reset_index().rename(columns={"index": "value", 0: "count"})
+
+customOrder=["January","February","March","April","May","June","July","August","September","October","November","December"]
+monthly_sum_df["Month"]=pd.Categorical(monthly_sum_df["Month"],categories=customOrder,ordered=True)
+
+monthly_sum_df=monthly_sum_df.sort_values(by="Month")
+year_sum_df=yearly_sum_df.sort_values(by="Year")
+
+
+
+tab1, tab2, tab3, tab4 = st.tabs(["Yearly Games Released", "Yearly Revenue", "Revenue Trendline", "Monthly Releases"])
+
+
+
+#First graphs
+fig1 = px.line(year_sum_df, x='Year', y='count', title='Number of games released over the years')
+fig1.update_yaxes(title='Number of games released')
+
+
+fig2 = px.line(df_agg, x='year', y='estimated_revenue', title='Estimated revenue over all years')
+fig2.update_xaxes(title='Year')
+
+
+
+fig3 = px.scatter(filtered_df, x='year', y='estimated_revenue',
+                 title='Estimated Revenue',
+                 trendline="ols",
+                 color_continuous_scale='Viridis')
+fig3.update_layout(
+    xaxis_title='Year',
+    yaxis_title='Estimated Revenue',
+    title={'x': 0.5, 'xanchor': 'center'},
+    showlegend=False
+)
+
+
+fig4 = px.line(monthly_sum_df, x='Month', y='count', title='Number of games released each month over all years')
+fig4.update_yaxes(title='Number of games released')
+
+with tab1:
+    st.plotly_chart(fig1)
+
+with tab2:
+    st.plotly_chart(fig2)
+
+with tab3:
+    st.plotly_chart(fig3)
+
+with tab4:
+    st.plotly_chart(fig4)
+#st.plotly_chart(fig1)
+#st.plotly_chart(fig2)
+#st.plotly_chart(fig3)
+#st.plotly_chart(fig4)

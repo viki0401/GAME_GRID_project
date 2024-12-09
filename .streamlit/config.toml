@@ -1,10 +1,12 @@
 [server]
 headless = true
+
 [theme]
 primaryColor="#FF69B4"  # Bright pink for primary highlights
-backgroundColor="#D3D3D3"  # Dark background
+backgroundColor="#DCDCDC"  # Dark background
 secondaryBackgroundColor="###FF69B4"  # Sidebar background
 textColor="#00000"  # White for main text
 font="Courier New"  # Techno-vibe font
+
 [sidebar]
 mainPageName = "Intro"
