@@ -19,13 +19,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description
-st.title("This is the title")
-st.markdown("This is the description of the title")
+st.title(" ☾⋆⁺₊🎮✩°｡ Intro ☾⋆⁺₊👾✩°｡")
+st.markdown("In 2024, video games continue to dominate entertainment, combining cutting-edge technology and creative innovation. Millions of players dive into new releases, fueled by exciting gameplay, digital downloads, and expanding cloud gaming services. With next-gen consoles in full swing and live-service models keeping players engaged, the gaming industry is smashing records and evolving fast. This year, gaming isn’t just about playing—it’s about shaping how people connect and experience stories worldwide")
 
-# Create a simple Plotly figure (using the Iris dataset)
-df = px.data.iris()  # iris is a pandas DataFrame
-fig = px.scatter(df, x="sepal_width", y="sepal_length")
-
-# Show the Plotly figure in Streamlit
-event = st.plotly_chart(fig, key="iris", use_container_width=True)
 
