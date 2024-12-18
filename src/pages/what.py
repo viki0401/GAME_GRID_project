@@ -217,3 +217,5 @@ pie_chart = alt.Chart(top_10_games_df).mark_arc().encode(
 st.title("🤝 **Why It’s Popular?**")  
 st.markdown("**'Just Chatting'** is all about building connections in a fun, relaxed way—whether gaming is part of it or not! It's the ultimate mix of entertainment and community-building.")  
 st.markdown("'Just Chatting' has stable viewership, growing steadily without major fluctuations. This indicates that it has reached a point of consistent popularity, unlike other games that still experience shifts in audience interest.")
+
+st.page_link("pages/twitch.py", icon= "🗣️",label="Next Page", help="Navigate to the next page", disabled=False)

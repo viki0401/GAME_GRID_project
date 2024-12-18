@@ -72,3 +72,7 @@ Understanding the most streamed games provides valuable insights into viewer tre
 
  Let’s explore ways to ensure success and avoid failure by taking a closer look at what’s popular on the Twitch platform right now. By analyzing current trends, streamers can leverage these insights to make informed decisions and set themselves up for success in a fast-evolving streaming landscape
 """)
+import streamlit as st
+
+
+st.page_link("pages/what.py", icon= "🗣️",label="Next Page", help="Navigate to the next page", disabled=False)
