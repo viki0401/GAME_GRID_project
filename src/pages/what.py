@@ -183,7 +183,7 @@ st.write("""
 # Plot the trend for Just Chatting vs Other Games
 plt.figure(figsize=(12, 6))
 plt.plot(just_chatting["RANK"], just_chatting["CUMULATIVE_VIEWS"], label="Just Chatting", color='darkorchid', marker='o', linewidth=2)
-plt.plot(other_games["RANK"], other_games["CUMULATIVE_VIEWS"], label="Other Games", color='black', marker='o', linewidth=2)
+plt.plot(other_games["RANK"], other_games["CUMULATIVE_VIEWS"], label="Other Games", color='orange', marker='o', linewidth=2)
 
 # Customize the plot
 
