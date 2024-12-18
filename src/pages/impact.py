@@ -1,7 +1,7 @@
+import matplotlib.pyplot as plt
 import streamlit as st
-import plotly.express as px
 import pandas as pd
-import plotly.graph_objects as go
+import plotly.express as px
 
 
 # Inject custom CSS to use Orbitron font for Streamlit UI
@@ -21,54 +21,171 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+
+st.title("| Language  |")
+st.image("viki.jpg")
+st.markdown(""" Language has a big impact on streaming, affecting how many people watch and interact.                                
+                 Streamers who speak popular languages usually reach more people. 
+                
+            
+    However, those using less common languages may have smaller audiences but can build strong, loyal communities.
+    Let's take a look at the next graphs to see how this plays out.""")
+
+
+
+
+
 # Title and description
-st.title("The Impact of Twitch on Sales")
-st.markdown("This is the description of the title")
+st.title("| The Influence of Language on Streaming |")
+df_new= pd.read_csv('./data/twitch_star.csv')
 
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+# Get the top 10 languages
+top_languages = df_new['LANGUAGE'].value_counts().head(10)
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-# URL of the CSV file
-import numpy as np # linear algebra
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Plotting
+fig, ax = plt.subplots(figsize=(10, 6))
 
-# URL of the new CSV file
-url_new = "https://storage.googleapis.com/kagglesdsdata/datasets/5093789/8676135/datasetV2.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20241209%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20241209T121929Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=9cc9ab54ff564f1e96b04abca871f41bfd01154e6624d7bdc7dbb7952ef7aa0829da4bb4ffa1f61db23a318121da496d77a1592076510ad9904efc2e8bc37d6292d8ac53aaa58821765c2b02e209bf28b8fc075da00a0e31ab8a59efbd974f09e1b01aec98a22da0d83bb985f4c293f631c2bc9e7f561eb84f43c13bf4fd8693f13632d7c9de3345817ff984e6709df672d9781e3a2ab6b97cfeebce626563048e3a766c2ec966226b50a3e7421b9fac2432745ed0712450e2807a344d848d96ce41d5d18bafb29aea61ad9953b871f588e74cc70248955843525520c6ff8fc2d4a4e8435f3ff32a8bbb9c76ea9b58697939ab47b41c5bfc9c07607a427f22c2"
+# Bar chart for top 10 languages
+top_languages.plot(kind='bar', color='hotpink', ax=ax)
 
-# Try reading the file with a different encoding (ISO-8859-1)
-df_new = pd.read_csv(url_new, encoding='ISO-8859-1')
+# Adding title and labels
+ax.set_title('| Top 10 Languages by Frequency |', fontsize=16)
+ax.set_xlabel('Language', fontsize=12)
+ax.set_ylabel('Frequency', fontsize=12)
+ax.tick_params(axis='x', rotation=45)
 
-# Check the first few rows of the new dataframe
-print(df_new.head())
-top_streamed_games = df_new['MOST_STREAMED_GAME'].value_counts().head(10)
-
-# Display the results
-print("Top 10 Most Streamed Games:")
-print(top_streamed_games)
-plt.style.use('dark_background')
-
-# Plot the top 10 most streamed games
-top_10_games.plot(kind='bar', figsize=(10, 6), color='cyan', edgecolor='white')
-
-# Title and labels with white font color for contrast
-plt.title('Top 10 Most Streamed Games', fontsize=16, color='white')
-plt.xlabel('Game', fontsize=12, color='white')
-plt.ylabel('Total Hours Streamed', fontsize=12, color='white')
-
-# Set x-axis tick labels to rotate for better readability
-plt.xticks(rotation=45, ha='right', color='white')
-
-# Remove gridlines (optional for cleaner look)
-plt.grid(False)
-
-# Tight layout to ensure elements fit well within the figure
+# Adjust layout for better visualization
 plt.tight_layout()
 
-# Show the plot
-plt.show()
+# Display the plot in Streamlit
+st.pyplot(fig)
+
+# URL to the dataset
+df_new= pd.read_csv('../GAME.GRID.project/data/twitch_star.csv')
+
+# Group by language and most streamed game, summing up total views
+game_language_analysis = df_new.groupby(['LANGUAGE', 'MOST_STREAMED_GAME'])['TOTAL_VIEWS'].sum().unstack().fillna(0)
+
+# Get the total views for each language (sum across all games)
+total_views_per_language = game_language_analysis.sum(axis=1).sort_values(ascending=False)
+
+# Select the top 10 most popular languages
+top_10_languages = total_views_per_language.head(10)
+
+# Filter the game_language_analysis to only include the top 10 languages
+game_language_analysis_top_10 = game_language_analysis.loc[top_10_languages.index]
+
+# Get the total views for each game in the filtered dataset
+total_views_per_game = game_language_analysis_top_10.sum(axis=0).sort_values(ascending=False)
+
+# Select the top 10 most popular games from the filtered dataset
+top_10_games = total_views_per_game.head(10)
+
+# Filter the data to include only the top 10 games
+game_language_analysis_top_10_games = game_language_analysis_top_10[top_10_games.index]
+
+# Transpose the data for better visualization
+game_language_analysis_top_10_games = game_language_analysis_top_10_games.T
+
+st.markdown("The top three languages by frequency are English, Russian, and Spanish. This means these languages are the most commonly used in streaming, reaching the largest number of viewers.")
 
 
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st
+
+# Load the data (assumes your DataFrame is already loaded as df_new)
+# df_new = pd.read_csv('your_file.csv')  # Uncomment and load your actual data here
+
+# Group by language and most streamed game, summing up total views
+game_language_analysis = df_new.groupby(['LANGUAGE', 'MOST_STREAMED_GAME'])['TOTAL_VIEWS'].sum().unstack().fillna(0)
+
+# Get the total views for each language (sum across all games)
+total_views_per_language = game_language_analysis.sum(axis=1).sort_values(ascending=False)
+
+# Select the top 10 most popular languages
+top_10_languages = total_views_per_language.head(10)
+
+# Filter the game_language_analysis to only include the top 10 languages
+game_language_analysis_top_10 = game_language_analysis.loc[top_10_languages.index]
+
+# Get the total views for each game in the filtered dataset
+total_views_per_game = game_language_analysis_top_10.sum(axis=0).sort_values(ascending=False)
+
+# Select the top 10 most popular games from the filtered dataset
+top_10_games = total_views_per_game.head(10)
+
+# Filter the data to include only the top 10 games
+game_language_analysis_top_10_games = game_language_analysis_top_10[top_10_games.index]
+
+# Transpose the data for better visualization
+game_language_analysis_top_10_games = game_language_analysis_top_10_games.T
+
+# Define custom electro color palette (neon-like colors)
+electro_colors = ['#362730',  # Dark brownish-purple
+                  '#4682B4',  # Muted grayish-blue
+                  '#5733FF',  # Electric blue
+                  '#FEF433',  # Bright yellow
+                  '#BCB369',  # Dark teal
+                  '#4E4151',  # Soft purple-gray
+                  '#FF83C1',  # Hot pink
+                  '#8D6E63',  # Warm brownish-pink
+                  '#33FFBB',  # Bright turquoise green
+                  '#F25930']  # Bright coral-orange
+
+# Identify the most popular game (the one with the highest total views)
+most_popular_game = game_language_analysis_top_10_games.sum(axis=1).idxmax()
+
+# Streamlit app layout
+st.title("Top 10 Most Popular Games by Top 10 Languages")
+st.write("This chart visualizes the top 10 most popular games by the top 10 languages on Twitch.")
+
+# Plot the top 10 games by the top 10 languages using a stacked bar plot
+fig, ax = plt.subplots(figsize=(12, 8))
+game_language_analysis_top_10_games.plot(kind='bar', stacked=True, color=electro_colors, ax=ax)
+
+# Highlight the most popular game with color #FF007F
+for i, bar in enumerate(ax.patches):
+    # Find which bar belongs to the most popular game
+    if game_language_analysis_top_10_games.index[i // len(game_language_analysis_top_10_games.columns)] == most_popular_game:
+        bar.set_facecolor('#FF007F')  # Set color for the most popular game
+
+# Add titles and labels
+ax.set_title('Top 10 Most Popular Games by Top 10 Languages', fontsize=16)
+ax.set_xlabel('Game', fontsize=12)
+ax.set_ylabel('Total Views', fontsize=12)
+ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+ax.legend(title='Language', bbox_to_anchor=(1.05, 1), loc='upper left')
+
+# Adjust layout to avoid overlap
+plt.tight_layout()
+
+# Show the plot in Streamlit
+st.pyplot(fig)
+
+
+
+
+st.markdown("Let's take a look at how many followers are gained per stream by language. This analysis will help us understand which languages are leading in follower growth. By examining this, we can see which language communities are growing the fastest in terms of engagement.")
+
+# Title for Streamlit app
+st.title("| Followers Gained Per Stream by Language |")
+
+# Create the box plot manually using Matplotlib
+fig, ax = plt.subplots(figsize=(10, 6))
+
+languages = df_new['LANGUAGE'].unique()
+data = [df_new[df_new['LANGUAGE'] == language]['FOLLOWERS_GAINED_PER_STREAM'].dropna() for language in languages]
+# Boxplo
+ax.boxplot(data, labels=languages, patch_artist=True, boxprops=dict(facecolor='hotpink', color='hotpink'))
+# Customize the plot
+ax.set_title('Followers Gained Per Stream by Language', fontsize=16)
+ax.set_xlabel('Language', fontsize=12)
+ax.set_ylabel('Followers Gained Per Stream', fontsize=12)
+ax.tick_params(axis='x', rotation=45)
+# Display the plot in Streamlit
+st.pyplot(fig)
+st.markdown("""In conclusion, English has become the dominant language in the streaming world, shaping the global landscape of streaming platform. As the most widely spoken second language, it allows streamers to connect with audiences across continents, making it essential for those seeking to grow their reach and engage with the largest viewer base. By using English, streamers can access more sponsorships, collaborations, and exposure, which leads to greater success.
+
+The language's influence extends beyond just communication—it fosters a shared cultural space where trends, memes, and communities thrive globally. While regional languages are growing, English remains the key to unlocking the widest audience and driving the streaming industry forward. Its role is integral to the ongoing evolution of digital entertainment, connecting people worldwide and shaping content creation.""")
 

@@ -1,10 +1,16 @@
 [server]
 headless = true
+
 [theme]
-primaryColor="#FF69B4"  # Bright pink for primary highlights
-backgroundColor="#D3D3D3"  # Dark background
-secondaryBackgroundColor="###FF69B4"  # Sidebar background
-textColor="#00000"  # White for main text
-font="Courier New"  # Techno-vibe font
-[sidebar]
+base="dark"
+primaryColor="#000000"  # Twitch Purple for primary highlights
+backgroundColor="#570082"  # Light gray background
+secondaryBackgroundColor="#570082"  # Dark purple for sidebar background
+textColor="#FFFFFF"
+font="sans serif"  # Techno-vibe font
+
+[main]
 mainPageName = "Intro"
+
+
+
