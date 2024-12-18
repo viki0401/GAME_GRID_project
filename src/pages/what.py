@@ -148,10 +148,8 @@ On Twitch, **"Just Chatting"** is when streamers focus on interacting with their
 - **🎉 Fun Activities**: Watching videos, hosting party games, or even live-streaming travel adventures.  
 
 ---
-
-### 🤝 Why It’s Popular  
-**"Just Chatting"** is all about building connections in a fun, relaxed way—whether gaming is part of it or not! It's the ultimate mix of entertainment and community-building.  
 """)
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -214,6 +212,6 @@ pie_chart = alt.Chart(top_10_games_df).mark_arc().encode(
 ).properties(
     title="Top 10 Most Streamed Games by Total Hours Streamed"
 )
-
-st.markdown("'Just Chatting' is stable, with its viewership growing steadily without major fluctuations.This indicates that 'Just Chatting' has reached a point of consistent popularity, while other games are still experiencing changes in audience interest.")
-
+st.title("🤝 **Why It’s Popular?**")  
+st.markdown("**'Just Chatting'** is all about building connections in a fun, relaxed way—whether gaming is part of it or not! It's the ultimate mix of entertainment and community-building.")  
+st.markdown("'Just Chatting' has stable viewership, growing steadily without major fluctuations. This indicates that it has reached a point of consistent popularity, unlike other games that still experience shifts in audience interest.")
