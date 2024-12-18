@@ -42,7 +42,7 @@ plt.tight_layout()
 st.pyplot(fig)
 
 # URL to the dataset
-df_new= pd.read_csv('../GAME.GRID.project/data/twitch_star.csv')
+df_new= pd.read_csv('./data/twitch_star.csv')
 
 # Group by language and most streamed game, summing up total views
 game_language_analysis = df_new.groupby(['LANGUAGE', 'MOST_STREAMED_GAME'])['TOTAL_VIEWS'].sum().unstack().fillna(0)
