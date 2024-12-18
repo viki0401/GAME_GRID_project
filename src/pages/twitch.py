@@ -3,6 +3,8 @@ import pandas as pd
 import seaborn as sns
 import streamlit as st
 
+st.title("How?")
+st.markdown(""""How" refers to the way you interact with your audience, which can impact your popularity. Using languages like Spanish, French, or German can help you reach specific regions, while speaking a regional language helps you connect more personally with certain groups. The choice depends on who your audience is and how well you can communicate in that language.""")
 st.title("| Language  |")
 st.image("viki.jpg")
 st.markdown(""" Language has a big impact on streaming, affecting how many people watch and interact.                                

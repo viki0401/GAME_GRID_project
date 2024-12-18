@@ -4,6 +4,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 df_new= pd.read_csv('./data/twitch_star.csv')
+st.title("When?")
+st.markdown(""""When" refers to selecting the optimal days to stream in order to attract the most viewers and maximize engagement. By studying audience activity patterns, you can adjust your streaming schedule to connect with viewers when they’re most likely to be online and engaged. Additionally, observing when people follow or explore channels can provide insights into the best times to stream.""")
 st.title("Being in the Right Place at the Right Time")
 st.markdown ("""Let's explore if any trends emerge in terms of which days are the most effective for streamers, helping them engage with viewers, attract more followers, and optimize their streaming schedule""")
 # Define the custom order for the days of the week
@@ -11,7 +13,6 @@ import streamlit as st
 
 
 from streamlit.components.v1 import html
-import time
 
 
 

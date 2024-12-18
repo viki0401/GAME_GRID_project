@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import altair as alt
 import streamlit as st
 # Load the data
+st.title("What?")
+st.markdown("""What refers to picking the best game for streaming based on popularity, competition, whether it’s an esports game, and how well it engages viewers. On Twitch, choosing the right game can affect how many people see your stream, as popular esports games usually have large audiences and regular tournaments. However, highly competitive games can make it harder to stand out unless you have something unique to offer. Picking the right game is important for growing your channel and building a loyal community that keeps returning.""")
 df_new = pd.read_csv('./data/twitch_star.csv')
 st.title("Top 50 Streamed Games")
 # Group by 'MOST_STREAMED_GAME' and sum the 'TOTAL_TIME_STREAMED'
