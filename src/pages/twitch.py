@@ -237,16 +237,10 @@ others_languages = {
 st.subheader("Languages Included in 'Others' (less than 2.8%):")
 
 # Create two columns to display the languages and percentages neatly
-col1, col2 = st.columns(2)
 
 # Display the languages and percentages in the two columns
-with col1:
-    for lang in others_languages.keys():
-        st.write(f"**{lang}**")
-        
-with col2:
-    for perc in others_languages.values():
-        st.write(f"{perc:.2f}%")
+for lang, perc in others_languages.items():
+    st.write(f"**{lang}**: {perc:.2f}")
 
 
 # Load your dataset (make sure your path to the CSV is correct)
