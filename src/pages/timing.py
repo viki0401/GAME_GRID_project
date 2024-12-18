@@ -77,3 +77,4 @@ st.markdown("""This graph shows the streaming activity for the top 5 languages: 
             Portuguese displays a steady presence, with specific peaks on certain days, indicating strong engagement from millions of viewers.
              Spanish also shows significant activity, driven by the large Latin American audience. 
             Overall, the graph highlights the global reach of English, while other languages like Russian and Portuguese exhibit significant but more localized engagement patterns.""")
+st.page_link("pages/recomendation.py", icon= "🗣️",label="Next Page", help="Navigate to the next page", disabled=False)

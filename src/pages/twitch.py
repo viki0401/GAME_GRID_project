@@ -277,5 +277,5 @@ st.markdown("""
 
 As a result, Polish or Turkish streamers may find it more challenging to grow a large, diverse audience, especially if their content is focused on specific regional interests. They may also face difficulties in securing international sponsorships, which often prefer streamers who can reach a broader, global market. However, despite these challenges, streamers in smaller languages can build strong, loyal communities within their regions, where they have the advantage of creating deeper connections with viewers who share similar cultural backgrounds.Smaller languages tend to have a more limited audience, which makes it harder for streamers to grow a substantial following.""")
 
-st.page_link("pages/recomendation.py", icon= "🗣️",label="Next Page", help="Navigate to the next page", disabled=False)
+st.page_link("pages/timing.py", icon= "🗣️",label="Next Page", help="Navigate to the next page", disabled=False)
 
